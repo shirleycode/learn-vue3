@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script type="text/javascript">
+
+    let person = {
+      name: 'liu',
+      age: 18
+    }
+
+    let p = new Proxy(person, {
+      get(target, propName) {
+        console.log(`${propName}被读取了`)
+        return Reflect.get(target, propName)
+      },
+      set(target, propName, value) {
+        console.log(`${propName}被修改了，我要去更新界面了`)
+        return Reflect.set(target, propName, value)
+      },
+      deleteProperty(target, propName) {
+        console.log(`${propName}被删除了，我要去更新界面了`)
+        return Reflect.deleteProperty(target, propName)
+      }
+    })
+
+    let name = p.name
+
+  </script>
+</body>
+
+</html>

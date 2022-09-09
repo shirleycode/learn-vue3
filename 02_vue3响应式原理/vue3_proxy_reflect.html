@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>proxy</title>
+</head>
+<body>
+  <script type="text/javascript">
+    const person = {
+      name: 'zhangsan',
+      age: 19
+    }
+
+    //#region 
+    // const p = new Proxy(person, {
+    //   // 读取
+    //   get(target, propName) {
+    //     console.log(`读取了${propName}属性`)
+    //     return Reflect.get(target, propName)
+    //   },
+    //   // 新增、修改
+    //   set(target, propName, value) {
+    //     console.log(`新增修改了${propName}属性`)
+    //     return Reflect.set(target, propName, value)
+    //   },
+    //   // 删除
+    //   deleteProperty(target, propName) {
+    //     console.log(`删除了${propName}`)
+    //     return Reflect.deleteProperty(target, propName)
+    //   }
+    // })
+
+    // p.name
+    // p.x =1
+    // p.name = 'liu'
+    // delete p.name
+    //#endregion
+
+    // Reflect 比直接修改有什么好处呢？当重复定变量的时候，Object.defineProperty直接报错，
+    // Reflect.defineProperty定义成功与否会有返回值，框架封装异常捕获相对要友好。
+
+    // Object.defineProperty(person, 'c', {
+    //   get() {
+    //     return 100
+    //   }
+    // })
+    // //  Cannot redefine property: c
+    // Object.defineProperty(person, 'c', {
+    //   get() {
+    //     return 200
+    //   }
+    // })
+
+    const x1 = Reflect.defineProperty(person, 'c', {
+      get() {
+        return 100
+      }
+    })
+    console.log(x1) // true
+
+    const x2 = Reflect.defineProperty(person, 'c', {
+      get() {
+        return 200
+      }
+    })
+    console.log(x2) // false
+
+  </script>
+</body>
+
+</html>
